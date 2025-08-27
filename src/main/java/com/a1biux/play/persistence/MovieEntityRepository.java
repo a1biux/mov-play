@@ -2,6 +2,7 @@ package com.a1biux.play.persistence;
 
 import com.a1biux.play.domain.dto.MovieDto;
 import com.a1biux.play.domain.dto.UpdateMovieDto;
+import com.a1biux.play.domain.exception.MovieAlreadyExistsException;
 import com.a1biux.play.domain.repository.MovieRepository;
 import com.a1biux.play.persistence.crud.CrudMovieEntity;
 import com.a1biux.play.persistence.entity.MovieEntity;
@@ -35,6 +36,10 @@ public class MovieEntityRepository implements MovieRepository {
 
     @Override
     public MovieDto save(MovieDto movieDto) {
+
+        if(this.crudMovieEntity.findFirstByTitle(movieDto.title()) != null) {
+            throw new MovieAlreadyExistsException(movieDto.title());
+        }
         MovieEntity movieEntity = this.movieMapper.toEntity(movieDto);
         movieEntity.setStatus("D");
         return this.movieMapper.toDto(this.crudMovieEntity.save(movieEntity));
