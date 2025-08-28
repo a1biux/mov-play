@@ -5,6 +5,12 @@ import com.a1biux.play.domain.dto.SuggestRequestDto;
 import com.a1biux.play.domain.dto.UpdateMovieDto;
 import com.a1biux.play.domain.service.MovPlayAiService;
 import com.a1biux.play.domain.service.MovieService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/movies")
+@Tag(name = "Movies", description = "Operations about movies of mov-play")
 public class MovieController {
 
     private final MovieService movieService;
@@ -29,7 +36,15 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MovieDto> getById(@PathVariable long id) {
+    @Operation(
+            summary = "Get a movie by Id",
+            description = "Return the movie by an ID",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Movie available"),
+                    @ApiResponse(responseCode = "404", description = "Movie not found", content = @Content)
+            }
+    )
+    public ResponseEntity<MovieDto> getById(@Parameter(description = "ID Movie to be found", example = "1") @PathVariable long id) {
         MovieDto movieDto = this.movieService.getById(id);
         if(movieDto == null) {
             return ResponseEntity.notFound().build();
@@ -43,12 +58,12 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity<MovieDto> add(@RequestBody MovieDto movieDto){
+    public ResponseEntity<MovieDto> add(@RequestBody @Valid MovieDto movieDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(this.movieService.add(movieDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MovieDto> update(@PathVariable long id, @RequestBody UpdateMovieDto updateMovieDto){
+    public ResponseEntity<MovieDto> update(@PathVariable long id, @RequestBody @Valid UpdateMovieDto updateMovieDto){
         return ResponseEntity.ok(this.movieService.update(id, updateMovieDto));
     }
 
