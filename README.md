@@ -14,5 +14,5 @@
   <li>https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-validation.html</li>
   <li>https://springdoc.org/</li><s>http://localhost:8090/mov-play/api/swagger-ui/index.html</s>
   <li>https://start.spring.io/</li>
-  <li>https://render.com/</li>
+  <li>https://render.com/ <em>load the database and deploy the application to publish</em></li>
 </ul>
