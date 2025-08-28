@@ -1,12 +1,15 @@
-* Spring Boot 
-* Spring Data JPA
-* MapStruct
-* langchain4j-open-ai
-* spring-boot-starter-validation
-* 
-* Exception Handler
-* Gradle
-* Docker
+<p>The following technologies are used in this development</p>
+<ul>
+  <li>Spring Boot</li>
+  <li>Spring Data JPA</li>
+  <li>MapStruct</li>
+  <li>langchain4j-open-ai</li>
+  <li>spring-boot-starter-validation</li>
+  <li>Exception Handler</li>
+  <li>Gradle</li>
+  <li>Docker</li>
+</ul>
+
 
 <p>Resources</p>
 <ul>
